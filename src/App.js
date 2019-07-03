@@ -13,8 +13,9 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <ListLayout posts={Data} />
-      <Wrapper />
+      <Wrapper>
+        <ListLayout posts={Data} />
+      </Wrapper>
       <Footer />
     </div>
   );

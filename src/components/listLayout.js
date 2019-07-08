@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 import PostData from "./postData";
 //making this a stateful component so we can keep track of the details view in this component
@@ -30,9 +31,7 @@ const PostDetails = styled.div`
 
 class ListLayout extends Component {
   state = {
-    showDetails: false,
-    posts: [], //because you can map an empty array before the state initiates
-    postData: null //because it will be an object
+    posts: [] //because you can map an empty array before the state initiates
   };
 
   componentDidMount() {
@@ -43,38 +42,19 @@ class ListLayout extends Component {
     });
   }
 
-  loadPost = post => {
-    console.log("the post is", post);
-    this.setState({
-      showDetails: true,
-      postData: post
-    });
-  }; //doesn't need prevent default behaviour as it is binded to this event because of react
-
   //have a render method because it's stateful component
   render() {
     const { posts, showDetails, postData } = this.state; //deconstructing the state
     return (
-      <>
-        <PostList>
-          {posts.map((post, index) => {
-            return (
-              <li key={index}>
-                <a href="#" onClick={() => this.loadPost(post)}>
-                  {post.post_title}
-                </a>
-              </li>
-            );
-          })}
-        </PostList>
-        <PostDetails>
-          {!!showDetails && !!postData ? (
-            <PostData postData={postData} />
-          ) : (
-            <p>Please select an entry</p>
-          )}
-        </PostDetails>
-      </>
+      <PostList>
+        {posts.map((post, index) => {
+          return (
+            <li key={index}>
+              <Link to={`/post/${post.id}`}>{post.post_title}</Link>
+            </li>
+          );
+        })}
+      </PostList>
     );
   }
 }
